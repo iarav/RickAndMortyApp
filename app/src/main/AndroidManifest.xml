@@ -26,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.view.activity.CharacterDetailActivity"
+            android:exported="true"
+            android:theme="@style/Theme.RickAndMortyApp">
+        </activity>
     </application>
 
 </manifest>

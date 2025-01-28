@@ -3,57 +3,65 @@ package com.example.rickandmortyapp.presentation.view.view
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.presentation.view.component.CharacterNameComponent
-import com.example.rickandmortyapp.presentation.view.component.CharacterImageComponent
+import com.example.rickandmortyapp.presentation.model.CharacterUiItem
+import com.example.rickandmortyapp.presentation.view.component.characterdetail.CharacterDetailAboutComponent
+import com.example.rickandmortyapp.presentation.view.component.characterdetail.CharacterNameComponent
+import com.example.rickandmortyapp.presentation.view.component.characterdetail.CharacterImageComponent
+import com.example.rickandmortyapp.presentation.view.component.characterdetail.RickAndMortyTopBarComponent
+import com.example.rickandmortyapp.presentation.view.component.global.ErrorComponent
+import com.example.rickandmortyapp.presentation.view.component.global.LoadingComponent
+import com.example.rickandmortyapp.presentation.view.viewmodel.CharacterDetailAction
+import com.example.rickandmortyapp.presentation.view.viewmodel.CharacterDetailViewModel
+import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 class CharacterDetailView {
 
-    val characterName = "Rick"
-    val characterImage = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-    val characterStatus = "Alive"
-    val characterSpecies = "Human"
-
     @Composable
-    fun CharacterDetails() {
+    fun CharacterDetails(
+        characterId: Int = 0,
+        viewModel: CharacterDetailViewModel = koinViewModel()
+    ) {
+        val uiState by viewModel.characterDetailUiState.collectAsState()
+
+        LaunchedEffect(Unit) {
+            viewModel.sendAction(CharacterDetailAction.FetchCharacterDetails(characterId))
+        }
+
         Scaffold(
             topBar = {
-                RickAndMortyTopBar()
+                RickAndMortyTopBarComponent()
             }
         ) { innerPadding ->
             Column(
                 modifier = Modifier.padding(innerPadding)
             ) {
-                CharacterDetailsContent()
+                if (uiState.isLoading) {
+                    LoadingComponent()
+                }else if(uiState.errorMessage != null){
+                    ErrorComponent(uiState.errorMessage!!)
+                } else {
+                    uiState.characterDetails?.let { CharacterDetailsContent(it) }
+                }
             }
         }
     }
 
     @Composable
-    private fun CharacterDetailsContent() {
+    private fun CharacterDetailsContent(
+        characterDetails: CharacterUiItem
+    ) {
+
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
@@ -63,49 +71,13 @@ class CharacterDetailView {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 CharacterImageComponent(
-                    characterImage = characterImage,
-                    characterName = characterName
+                    characterImage = characterDetails.image,
+                    characterName = characterDetails.name
                 )
-                CharacterNameComponent(characterName)
-//                CharacterDetailAbout(characterStatus, characterSpecies)
+                CharacterNameComponent(characterDetails.name)
+                CharacterDetailAboutComponent(characterDetails)
             }
         }
-    }
-
-    @Composable
-    private fun RickAndMortyTopBar() {
-        TopAppBar(
-            colors = TopAppBarColors(
-                containerColor = colorResource(R.color.rick_and_morty_sea_green),
-                titleContentColor = colorResource(R.color.black),
-                scrolledContainerColor = colorResource(R.color.rick_and_morty_sea_green),
-                navigationIconContentColor = colorResource(R.color.black),
-                actionIconContentColor = colorResource(R.color.black)
-            ),
-            title = {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(
-                        text = "Rick and Morty",
-                        modifier = Modifier.weight(1f),
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Spacer(modifier = Modifier.width(48.dp))
-                }
-            },
-            navigationIcon = {
-                IconButton(onClick = {
-                    // TODO - Implement back navigation
-                }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
-                }
-            }
-        )
     }
 
     @Preview

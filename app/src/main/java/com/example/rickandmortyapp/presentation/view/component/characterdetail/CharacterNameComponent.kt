@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.presentation.view.component
+package com.example.rickandmortyapp.presentation.view.component.characterdetail
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

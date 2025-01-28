@@ -8,6 +8,7 @@ import com.example.rickandmortyapp.domain.mapper.CharacterDetailsPresentationMap
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import com.example.rickandmortyapp.domain.usecase.GetCharacterByIdUseCase
+import com.example.rickandmortyapp.presentation.view.viewmodel.CharacterDetailViewModel
 import com.example.rickandmortyapp.presentation.view.viewmodel.CharactersViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -37,6 +38,12 @@ object RickAndMortyModule {
         viewModel {
             CharactersViewModel(
                 getAllCharactersUseCase = get(),
+                characterDetailsPresentationMapper = get()
+            )
+        }
+        viewModel {
+            CharacterDetailViewModel(
+                getCharacterByIdUseCase = get(),
                 characterDetailsPresentationMapper = get()
             )
         }

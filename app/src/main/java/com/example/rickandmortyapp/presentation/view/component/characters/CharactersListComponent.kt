@@ -1,5 +1,7 @@
-package com.example.rickandmortyapp.presentation.view.component
+package com.example.rickandmortyapp.presentation.view.component.characters
 
+import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -19,11 +22,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.presentation.model.CharacterUiItem
+import com.example.rickandmortyapp.presentation.view.activity.CharacterDetailActivity
+
+const val CHARACTER_ID = "CHARACTER_ID"
 
 @Composable
 internal fun CharactersListComponent(
     charactersList: List<CharacterUiItem>
 ) {
+    val context = LocalContext.current
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,6 +41,12 @@ internal fun CharactersListComponent(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .width(IntrinsicSize.Max)
+                    .clickable {
+                        val intent = Intent(context, CharacterDetailActivity::class.java).apply {
+                            putExtra(CHARACTER_ID, charactersList[index].id)
+                        }
+                        context.startActivity(intent)
+                    }
             ) {
                 Text(
                     text = charactersList[index].name,
