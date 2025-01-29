@@ -8,6 +8,8 @@ import com.example.rickandmortyapp.presentation.model.CharacterUiItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -38,22 +40,20 @@ class CharactersViewModel(
     private fun fetchAllCharacters() {
         viewModelScope.launch {
             _charactersUiState.update { it.copy(isLoading = true) }
-            try {
-                getAllCharactersUseCase().collect { charactersList ->
-                    _charactersUiState.update {
-                        it.copy(
-                            isLoading = false,
-                            charactersList = characterDetailsPresentationMapper.mapList(
-                                charactersList.results
-                            )
-                        )
-                    }
-                }
-            } catch (e: Exception) {
+            getAllCharactersUseCase().map { charactersList ->
                 _charactersUiState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = e.message
+                        charactersList = characterDetailsPresentationMapper.mapList(
+                            charactersList.results
+                        )
+                    )
+                }
+            }.catch { error ->
+                _charactersUiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = error.message
                     )
                 }
             }

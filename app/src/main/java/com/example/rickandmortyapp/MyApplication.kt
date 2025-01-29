@@ -16,7 +16,8 @@ class MyApplication: Application() {
             RickAndMortyModule.dataModule,
             RickAndMortyModule.domainModule,
             RickAndMortyModule.presentationModule,
-            RickAndMortyModule.networkModule
+            RickAndMortyModule.networkModule,
+            RickAndMortyModule.coroutineModule
         )
 
         startKoin {

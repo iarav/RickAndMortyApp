@@ -10,6 +10,8 @@ import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import com.example.rickandmortyapp.domain.usecase.GetCharacterByIdUseCase
 import com.example.rickandmortyapp.presentation.view.viewmodel.CharacterDetailViewModel
 import com.example.rickandmortyapp.presentation.view.viewmodel.CharactersViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -29,8 +31,8 @@ object RickAndMortyModule {
     }
 
     val domainModule = module {
-        factory { GetAllCharactersUseCase(characterRepository = get()) }
-        factory { GetCharacterByIdUseCase(characterRepository = get()) }
+        factory { GetAllCharactersUseCase(characterRepository = get(), dispatcher = get()) }
+        factory { GetCharacterByIdUseCase(characterRepository = get(), dispatcher = get()) }
         factory { CharacterDetailsPresentationMapper() }
     }
 
@@ -60,5 +62,9 @@ object RickAndMortyModule {
         single<CharacterApi> {
             get<Retrofit>().create(CharacterApi::class.java)
         }
+    }
+
+    val coroutineModule = module {
+        single<CoroutineDispatcher> { Dispatchers.IO }
     }
 }

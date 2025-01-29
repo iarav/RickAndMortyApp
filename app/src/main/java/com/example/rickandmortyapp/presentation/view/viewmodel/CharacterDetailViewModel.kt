@@ -6,8 +6,12 @@ import com.example.rickandmortyapp.domain.mapper.CharacterDetailsPresentationMap
 import com.example.rickandmortyapp.domain.usecase.GetCharacterByIdUseCase
 import com.example.rickandmortyapp.presentation.model.CharacterUiItem
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -39,34 +43,23 @@ class CharacterDetailViewModel(
     private fun fetchCharacterDetails(characterId: Int) {
         viewModelScope.launch {
             _characterDetailUiState.update { it.copy(isLoading = true) }
-            try {
-                if (characterId != 0) {
-                    getCharacterByIdUseCase(characterId).collect { characterDetails ->
-                        _characterDetailUiState.update {
-                            it.copy(
-                                isLoading = false,
-                                characterDetails = characterDetailsPresentationMapper.map(
-                                    characterDetails
-                                )
-                            )
-                        }
-                    }
-                } else {
-                    _characterDetailUiState.update {
-                        it.copy(
-                            isLoading = false,
-                            errorMessage = "Character ID cannot be 0"
-                        )
-                    }
-                }
-            } catch (e: Exception) {
+            getCharacterByIdUseCase(characterId).map { characterDetails ->
                 _characterDetailUiState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = e.message
+                        characterDetails = characterDetailsPresentationMapper.map(
+                            characterDetails
+                        )
                     )
                 }
-            }
+            }.catch { error ->
+                _characterDetailUiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = error.message
+                    )
+                }
+            }.stateIn(viewModelScope, SharingStarted.Lazily, CharacterDetailUiState())
         }
     }
 }
