@@ -16,6 +16,7 @@ fun ErrorComponent(errorMessage: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 40.dp)
     ) {
         Card(
             colors = CardColors(

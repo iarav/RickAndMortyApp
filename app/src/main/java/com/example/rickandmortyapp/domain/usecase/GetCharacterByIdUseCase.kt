@@ -1,9 +1,13 @@
 package com.example.rickandmortyapp.domain.usecase
 
+import android.util.Log
 import com.example.rickandmortyapp.domain.model.CharacterDetails
 import com.example.rickandmortyapp.domain.repository.CharacterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class GetCharacterByIdUseCase(
@@ -11,10 +15,17 @@ class GetCharacterByIdUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
     operator fun invoke(id: Int): Flow<CharacterDetails> {
-        return if (id <= 0) {
-            characterRepository.getCharacterById(id).flowOn(dispatcher)
-        } else {
-            throw IllegalArgumentException("Invalid character id")
+        return flow {
+            if (id == 0) {
+                Log.e("Exception", "Invalid character id")
+                throw IllegalArgumentException("Invalid character id")
+            }
+            emitAll(characterRepository.getCharacterById(id))
         }
+        .catch { error ->
+            Log.e("Exception", "Erro ao buscar detalhes do personagem: ${error.message}")
+            throw Exception("Erro ao buscar detalhes do personagem: ${error.message}")
+        }
+        .flowOn(dispatcher)
     }
 }
