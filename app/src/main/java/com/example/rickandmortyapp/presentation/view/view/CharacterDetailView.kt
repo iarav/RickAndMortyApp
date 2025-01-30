@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmortyapp.presentation.model.CharacterUiItem
@@ -48,8 +50,8 @@ class CharacterDetailView {
             ) {
                 if (uiState.isLoading) {
                     LoadingComponent()
-                }else if(uiState.errorMessage != null){
-                    ErrorComponent(uiState.errorMessage!!)
+                } else if (uiState.errorMessage != null) {
+                    ErrorComponent(stringResource(uiState.errorMessage!!))
                 } else {
                     uiState.characterDetails?.let { CharacterDetailsContent(it) }
                 }
@@ -66,16 +68,22 @@ class CharacterDetailView {
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                CharacterImageComponent(
-                    characterImage = characterDetails.image,
-                    characterName = characterDetails.name
-                )
-                CharacterNameComponent(characterDetails.name)
-                CharacterDetailAboutComponent(characterDetails)
+                item {
+                    CharacterImageComponent(
+                        characterImage = characterDetails.image,
+                        characterName = characterDetails.name
+                    )
+                }
+                item {
+                    CharacterNameComponent(characterDetails.name)
+                }
+                item {
+                    CharacterDetailAboutComponent(characterDetails)
+                }
             }
         }
     }

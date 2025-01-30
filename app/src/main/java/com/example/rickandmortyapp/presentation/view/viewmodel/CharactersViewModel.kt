@@ -2,6 +2,7 @@ package com.example.rickandmortyapp.presentation.view.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.domain.mapper.CharacterDetailsPresentationMapper
 import com.example.rickandmortyapp.domain.usecase.GetAllCharactersUseCase
 import com.example.rickandmortyapp.presentation.model.CharacterUiItem
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 data class CharactersUiState(
     val isLoading: Boolean = false,
     val charactersList: List<CharacterUiItem>? = null,
-    val errorMessage: String? = null
+    val errorMessage: Int? = null
 )
 
 sealed class CharacterAction {
@@ -54,7 +55,7 @@ class CharactersViewModel(
                 _charactersUiState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = "Erro ao listar personagens!"
+                        errorMessage = R.string.error_characters_list
                     )
                 }
             }.collect()

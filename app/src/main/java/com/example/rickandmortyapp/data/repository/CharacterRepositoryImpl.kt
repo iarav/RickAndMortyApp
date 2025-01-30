@@ -22,7 +22,7 @@ class CharacterRepositoryImpl(
         emit(mappedResponse)
     }.catch {
         Log.e("HttpRequestException", "GetAllCharacters - Error - message: ${it.message}.")
-        throw Exception("Erro ao buscar personagens")
+        throw Exception(it.message)
     }
 
     override fun getCharacterById(id: Int): Flow<CharacterDetails> = flow {
@@ -31,6 +31,6 @@ class CharacterRepositoryImpl(
         emit(mappedResponse)
     }.catch {
         Log.e("HttpRequestException", "GetCharacterById - Error - message: ${it.message}.")
-        throw Exception("Erro ao buscar personagem")
+        throw Exception(it.message)
     }
 }

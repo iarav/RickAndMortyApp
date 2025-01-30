@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmortyapp.R
@@ -55,7 +56,7 @@ class CharactersView {
         if (uiState.isLoading) {
             LoadingComponent()
         } else if (uiState.errorMessage != null) {
-            ErrorComponent(uiState.errorMessage!!)
+            ErrorComponent(stringResource(uiState.errorMessage!!))
         } else {
             uiState.charactersList?.let { CharactersListComponent(it) }
         }
