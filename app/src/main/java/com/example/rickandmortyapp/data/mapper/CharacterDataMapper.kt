@@ -17,7 +17,7 @@ class CharacterDataMapper {
                 origin = Location(it.origin.name, it.origin.url),
                 location = Location(it.location.name, it.location.url),
                 image = it.image,
-                episode = it.episode,
+                episodes = it.episode,
                 url = it.url,
                 created = it.created
             )

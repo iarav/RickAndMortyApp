@@ -1,20 +1,22 @@
 package com.example.rickandmortyapp.presentation.view.component.global
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LoadingComponent() {
+fun LoadingComponent(
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.CenterHorizontally)
         ) {
             CircularProgressIndicator()

@@ -14,7 +14,7 @@ class CharacterDetailsPresentationMapper {
                 type = it.type,
                 gender = getPortugueseCharacterGender(it.gender),
                 image = it.image,
-                episode = it.episode,
+                episodes = getFormattedEpisodes(it.episodes),
                 url = it.url,
                 created = it.created
             )
@@ -53,6 +53,12 @@ class CharacterDetailsPresentationMapper {
             "Female" -> "Feminino"
             "Genderless" -> "Sem gênero"
             else -> "Desconhecido"
+        }
+    }
+
+    private fun getFormattedEpisodes(episodes: List<String>): List<String> {
+        return episodes.map {
+            it.substringAfterLast("/")
         }
     }
 }

@@ -49,7 +49,9 @@ class CharacterDetailView {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 if (uiState.isLoading) {
-                    LoadingComponent()
+                    LoadingComponent(
+                        modifier = Modifier.padding(top = 100.dp)
+                    )
                 } else if (uiState.errorMessage != null) {
                     ErrorComponent(stringResource(uiState.errorMessage!!))
                 } else {

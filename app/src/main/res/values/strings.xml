@@ -6,7 +6,7 @@
     <string name="species_title">Espécie: </string>
     <string name="gender_title">Gênero: </string>
     <string name="type_title">Tipo: </string>
-    <string name="episodes_title">Episódios: </string>
+    <string name="episodes_title">Episódios que o personagem aparece: </string>
 
     <!--  ERROR MESSAGES  -->
     <string name="error_characters_list">"Erro ao listar personagens :("</string>

@@ -8,7 +8,7 @@ data class CharacterUiItem (
     val type: String,
     val gender: String,
     val image: String,
-    val episode: List<String>,
+    val episodes: List<String>,
     val url: String,
     val created: String
 )

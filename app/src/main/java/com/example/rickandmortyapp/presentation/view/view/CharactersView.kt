@@ -80,7 +80,7 @@ class CharactersView {
                 type = "",
                 gender = "Female",
                 image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                episode = emptyList(),
+                episodes = emptyList(),
                 url = "",
                 created = ""
             )
