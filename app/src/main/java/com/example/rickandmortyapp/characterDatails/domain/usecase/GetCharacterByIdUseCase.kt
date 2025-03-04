@@ -23,6 +23,7 @@ class GetCharacterByIdUseCase(
             emitAll(characterRepository.getCharacterById(id))
         }
         .catch { error ->
+            if (error is IllegalArgumentException) throw error
             Log.e("Exception", "Erro ao buscar detalhes do personagem: ${error.message}")
             throw Exception("Erro ao buscar detalhes do personagem: ${error.message}")
         }
