@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  TITLES  -->
+    <string name="status_title">Status: </string>
+    <string name="species_title">Espécie: </string>
+    <string name="gender_title">Gênero: </string>
+    <string name="type_title">Tipo: </string>
+    <string name="episodes_title">Episódios que o personagem aparece: </string>
+
+    <!--  ERROR MESSAGES  -->
+    <string name="error_characters_list">"Erro ao listar personagens :("</string>
+    <string name="error_character_details">"Erro ao buscar o personagem :("</string>
+</resources>
