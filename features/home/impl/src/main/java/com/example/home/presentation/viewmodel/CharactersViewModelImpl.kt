@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CharactersViewModelImpl(
+internal class CharactersViewModelImpl(
     private val getAllCharactersUseCase: com.example.home.domain.usecase.GetAllCharactersUseCase,
     private val characterPresentationMapper: CharacterPresentationMapper
 ) : CharactersViewModel() {

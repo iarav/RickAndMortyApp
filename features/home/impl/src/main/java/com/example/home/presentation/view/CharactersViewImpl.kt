@@ -23,7 +23,7 @@ import com.example.designsystem.R
 import com.example.home.presentation.viewmodel.CharacterAction
 import com.example.home.presentation.viewmodel.CharactersViewModel
 
-class CharactersViewImpl : CharactersView() {
+internal class CharactersViewImpl : CharactersView() {
     @Composable
     override fun CharactersListView(
         viewModel: CharactersViewModel
