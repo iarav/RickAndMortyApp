@@ -3,6 +3,7 @@ package com.example.home.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.example.common.domain.mapper.CharacterPresentationMapper
 import com.example.designsystem.R
+import com.example.home.domain.usecase.GetAllCharactersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class CharactersViewModelImpl(
-    private val getAllCharactersUseCase: com.example.home.domain.usecase.GetAllCharactersUseCase,
+    private val getAllCharactersUseCase: GetAllCharactersUseCase,
     private val characterPresentationMapper: CharacterPresentationMapper
 ) : CharactersViewModel() {
 

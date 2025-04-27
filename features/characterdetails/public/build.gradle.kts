@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.home"
+    namespace = "com.example.characterdetails"
     compileSdk = 35
 
     defaultConfig {

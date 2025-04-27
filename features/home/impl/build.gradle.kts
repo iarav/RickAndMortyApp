@@ -61,7 +61,7 @@ dependencies {
 
 
     api(project(":features:home:public"))
-    implementation(project(":features:common"))
-    implementation(project(":features:characterdetails"))
+    implementation(project(":features:common:public"))
+    implementation(project(":features:characterdetails:public"))
     implementation(project(":designsystem"))
 }

@@ -75,8 +75,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(project(":utils"))
+    implementation(project(":modulegenerator"))
     implementation(project(":designsystem"))
     implementation(project(":features:home:public"))
-    implementation(project(":features:characterdetails"))
+    implementation(project(":features:characterdetails:public"))
 }

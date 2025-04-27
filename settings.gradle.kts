@@ -22,8 +22,10 @@ dependencyResolutionManagement {
 rootProject.name = "RickAndMortyApp"
 include(":app")
 include(":designsystem")
-include(":utils")
-include(":features:characterdetails")
-include(":features:common")
+include(":modulegenerator")
 include(":features:home:public")
 include(":features:home:impl")
+include(":features:characterdetails:impl")
+include(":features:characterdetails:public")
+include(":features:common:impl")
+include(":features:common:public")
