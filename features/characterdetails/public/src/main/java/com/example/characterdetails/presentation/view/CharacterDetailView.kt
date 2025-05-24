@@ -8,12 +8,17 @@ abstract class CharacterDetailView {
     @Composable
     abstract fun CharacterDetails(
         characterId: Int,
+        onBackButtonPressed: () -> Unit,
         viewModel: CharacterDetailViewModel
     )
 
     @Composable
-    fun Render(characterId: Int = 0) {
+    fun Render(characterId: Int = 0, onBackButtonPressed: () -> Unit = {}) {
         val viewModel: CharacterDetailViewModel = koinViewModel()
-        CharacterDetails(characterId, viewModel)
+        CharacterDetails(
+            characterId,
+            onBackButtonPressed,
+            viewModel
+        )
     }
 }

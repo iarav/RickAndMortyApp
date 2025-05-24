@@ -1,6 +1,5 @@
 package com.example.home.presentation.view.component
 
-import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,22 +12,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.characterdetails.presentation.activity.CHARACTER_ID
 import com.example.common.presentation.model.CharacterUiItem
-import com.example.characterdetails.presentation.activity.CharacterDetailActivity
 import com.example.designsystem.R
 
 @Composable
 internal fun CharactersListComponent(
-    charactersList: List<CharacterUiItem>
+    charactersList: List<CharacterUiItem>,
+    onNavigateToCharacterDetails: (Int) -> Unit
 ) {
-    val context = LocalContext.current
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,10 +35,7 @@ internal fun CharactersListComponent(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .clickable {
-                        val intent = Intent(context, CharacterDetailActivity::class.java).apply {
-                            putExtra(CHARACTER_ID, charactersList[index].id)
-                        }
-                        context.startActivity(intent)
+                        onNavigateToCharacterDetails(charactersList[index].id)
                     }
             ) {
                 Text(

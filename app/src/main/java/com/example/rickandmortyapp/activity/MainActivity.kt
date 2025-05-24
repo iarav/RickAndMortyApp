@@ -1,4 +1,4 @@
-package com.example.characterdetails.presentation.activity
+package com.example.rickandmortyapp.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,21 +6,24 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.characterdetails.presentation.view.CharacterDetailView
 import com.example.designsystem.ui.theme.RickAndMortyAppTheme
+import com.example.home.presentation.view.CharactersView
+import com.example.rickandmortyapp.navigation.RickAndMortyNavHost
 import org.koin.android.ext.android.inject
 
-const val CHARACTER_ID = "CHARACTER_ID"
+class MainActivity : ComponentActivity() {
 
-class CharacterDetailActivity: ComponentActivity() {
-
+    private val charactersView: CharactersView by inject()
     private val characterDetailView: CharacterDetailView by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val characterId = intent.getIntExtra(CHARACTER_ID, 0)
             RickAndMortyAppTheme {
-                characterDetailView.Render(characterId)
+                RickAndMortyNavHost(
+                    charactersView = charactersView,
+                    characterDetailView = characterDetailView,
+                )
             }
         }
     }

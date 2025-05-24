@@ -1,6 +1,5 @@
 package com.example.characterdetails.presentation.view.component
 
-import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +16,6 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,8 +24,9 @@ import com.example.designsystem.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun RickAndMortyTopBarComponent() {
-    val context = LocalContext.current
+internal fun RickAndMortyTopBarComponent(
+    onBackButtonPressed: () -> Unit = {}
+) {
     TopAppBar(
         colors = TopAppBarColors(
             containerColor = colorResource(R.color.rick_and_morty_sea_green),
@@ -53,12 +52,11 @@ internal fun RickAndMortyTopBarComponent() {
             }
         },
         navigationIcon = {
-            IconButton(onClick = {
-                if (context is Activity) {
-                    context.finish()
-                }
-            }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
+            IconButton(onClick = onBackButtonPressed) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Voltar"
+                )
             }
         }
     )

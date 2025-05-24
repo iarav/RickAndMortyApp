@@ -26,7 +26,8 @@ import com.example.home.presentation.viewmodel.CharactersViewModel
 internal class CharactersViewImpl : CharactersView() {
     @Composable
     override fun CharactersListView(
-        viewModel: CharactersViewModel
+        viewModel: CharactersViewModel,
+        onNavigateToCharacterDetails: (Int) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -40,13 +41,17 @@ internal class CharactersViewImpl : CharactersView() {
                     .width(350.dp)
                     .align(alignment = Alignment.CenterHorizontally)
             )
-            Characters(viewModel)
+            Characters(
+                viewModel,
+                onNavigateToCharacterDetails
+            )
         }
     }
 
     @Composable
     private fun Characters(
-        viewModel: CharactersViewModel
+        viewModel: CharactersViewModel,
+        onNavigateToCharacterDetails: (Int) -> Unit
     ) {
         val uiState by viewModel.charactersUiState.collectAsState()
 
@@ -59,7 +64,12 @@ internal class CharactersViewImpl : CharactersView() {
         } else if (uiState.errorMessage != null) {
             ErrorComponent(stringResource(uiState.errorMessage!!))
         } else {
-            uiState.charactersList?.let { CharactersListComponent(it) }
+            uiState.charactersList?.let {
+                CharactersListComponent(
+                    charactersList = it,
+                    onNavigateToCharacterDetails = onNavigateToCharacterDetails
+                )
+            }
         }
     }
 
@@ -67,7 +77,8 @@ internal class CharactersViewImpl : CharactersView() {
     @Composable
     private fun PreviewCharacterList() {
         CharactersListComponent(
-            charactersList = getPreviewCharacters()
+            charactersList = getPreviewCharacters(),
+            onNavigateToCharacterDetails = {}
         )
     }
 

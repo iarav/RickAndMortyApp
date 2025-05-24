@@ -31,6 +31,7 @@ class CharacterDetailViewImpl : CharacterDetailView() {
     @Composable
     override fun CharacterDetails(
         characterId: Int,
+        onBackButtonPressed: () -> Unit,
         viewModel: CharacterDetailViewModel
     ) {
         val uiState by viewModel.characterDetailUiState.collectAsState()
@@ -41,7 +42,9 @@ class CharacterDetailViewImpl : CharacterDetailView() {
 
         Scaffold(
             topBar = {
-                RickAndMortyTopBarComponent()
+                RickAndMortyTopBarComponent(
+                    onBackButtonPressed
+                )
             }
         ) { innerPadding ->
             Column(
