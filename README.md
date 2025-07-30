@@ -33,7 +33,11 @@ Este projeto tem como propósito principal o aprendizado e a aplicação prátic
 ## 📂 Estrutura do Projeto
 
 O projeto segue o padrão de **Clean Architecture** com três camadas principais:
+- **Domain**: Regras de negócio, casos de uso e entidades.
+- **Data**: Repositórios, fontes de dados (API, banco de dados) e mapeamento entre modelos.
+- **Presentation**: Lógica de exibição e interação da interface usando MVVM e Compose.
 
+A estrutura de pastas é organizada da seguinte forma:
 ```
 features/
   home/           # Feature de listagem de personagens
@@ -43,10 +47,6 @@ app/              # App principal (entrypoint)
 designsystem/     # Componentes visuais reutilizáveis
 modulegenerator/  # Utilitários de geração de módulos
 ```
-
-- **Domain**: Regras de negócio, casos de uso e entidades.
-- **Data**: Repositórios, fontes de dados (API, banco de dados) e mapeamento entre modelos.
-- **Presentation**: Lógica de exibição e interação da interface usando MVVM e Compose.
 
 ## ⚙️ Pré-requisitos
 
